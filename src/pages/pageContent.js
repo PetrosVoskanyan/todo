@@ -35,7 +35,7 @@ export class PageContent extends Component {
         ],
       },
     ],
-    currenActive: 0,
+    selectedTask: 0,
   };
 
   render() {
@@ -43,13 +43,23 @@ export class PageContent extends Component {
       <div>
         <Header />
         <div className="PageContainer">
-          <TaskList tasks={this.state.taskList} />
+          <TaskList
+            tasks={this.state.taskList}
+            selected={this.state.selectedTask}
+            onChange={(ind) => this.selectedTaskChange(ind)}
+          />
           <TaskDetails
-            activeTask={this.state.taskList[this.state.currenActive]}
-            tasks={this.state.taskList[this.state.currenActive]}
+            activeTask={this.state.taskList[this.state.selectedTask]}
+            tasks={this.state.taskList[this.state.selectedTask]}
           />
         </div>
       </div>
     );
+  }
+
+  selectedTaskChange(index) {
+    this.setState({
+      selectedTask: index,
+    });
   }
 }
