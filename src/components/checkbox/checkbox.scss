@@ -1,0 +1,21 @@
+.CheckboxContainer {
+  display: flex;
+  gap: 8px;
+
+  .Text {
+    color: white;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  .Checkbox {
+    border: 1.5px solid #B4B4B4;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    display: flex;
+    cursor: pointer;
+  }
+}
