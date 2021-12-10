@@ -8,6 +8,7 @@ export const TaskList = ({ tasks, selected, onChange }) => {
       {
         tasks.map((item, ind) => (
           <TaskListItem
+            key={ind}
             task={item}
             onChangeSelected={() => onChange(ind)}
             active={ind === selected}

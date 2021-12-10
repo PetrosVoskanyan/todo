@@ -5,8 +5,11 @@ export const TodoList = ({ tasksText }) => {
   return (
     <div className="TodoList">
       {
-        tasksText.todos.map((item) => (
-          <TodoListItem taskInfo={item.name} />
+        tasksText.todos.map((item, ind) => (
+          <TodoListItem
+            key={ind}
+            taskInfo={item.name}
+          />
         ))
       }
     </div>
