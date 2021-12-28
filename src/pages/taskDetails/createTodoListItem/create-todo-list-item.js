@@ -1,57 +1,45 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import './create-todo-list-item.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import  {faPlusSquare} from '@fortawesome/free-solid-svg-icons'
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
-export class CreateTodoListItem extends Component {
+export const CreateTodoListItem = ({ handleClick }) => {
 
-  state = {
-    isDone: false,
-    name: ""
+  const [isDone, setIsDone] = useState(false);
+  const [name, setName] = useState('');
+
+  const toggleChangeMode = () => {
+    setIsDone(!isDone);
   };
 
-  render() {
-    return (
-      <div className="CreateTodoListItem">
-        {
-          this.state.isDone ? (
-            <input
-              className="TaskInput"
-              type="text"
-              onBlur={() => this.toggleEditMod()}
-              onChange={(ev) => this.toggleAddMod(ev)}
-              autoFocus
-            />
-          ) : (
-            <label className="CreateContainer">
-                <FontAwesomeIcon className="CreateButton" icon={faPlusSquare} onClick={() => this.toggleFstxMod()}/>
-              <span className="AddText">Add todo item</span>
-            </label>
-          )
-        }
-      </div>
-    );
-  }
+  const toggleEditMode = () => {
+    handleClick({ isDone, name });
+    toggleChangeMode();
+  };
 
-  toggleFstxMod = () => {
-    this.setState({
-      isDone: !this.state.isDone,
-    });
-  }
+  const toggleAddMod = (ev) => {
+    const text = ev.target.value;
+    setName(text);
+  };
 
-  toggleEditMod = () => {
-    this.props.handleClick(this.state)
-
-    this.setState({
-      isDone: !this.state.isDone,
-    });
-  }
-
-  toggleAddMod = (ev) => {
-      const text = ev.target.value;
-
-    this.setState({
-      name: text,
-    });
-  }
-}
+  return (
+    <div className="CreateTodoListItem">
+      {
+        isDone ? (
+          <input
+            className="TaskInput"
+            type="text"
+            onBlur={() => toggleEditMode()}
+            onChange={(ev) => toggleAddMod(ev)}
+            autoFocus
+          />
+        ) : (
+          <label className="CreateContainer">
+            <FontAwesomeIcon className="CreateButton" icon={faPlusSquare} onClick={() => toggleChangeMode()} />
+            <span className="AddText">Add todo item</span>
+          </label>
+        )
+      }
+    </div>
+  );
+};

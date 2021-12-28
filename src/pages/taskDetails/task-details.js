@@ -8,8 +8,8 @@ export const TaskDetails = ({ activeTask, onSave, onDelete }) => {
   return (
     <div className="TaskDetails">
       <Taskinfo taskInfo={activeTask} />
-      <TodoList tasksText={activeTask} onDelete={(ind) => onDelete(ind)}/>
-      <CreateTodoListItem handleClick={(task) => onSave(task)}/>
+      <TodoList tasksText={activeTask} onDelete={(ind) => onDelete(ind)} />
+      <CreateTodoListItem handleClick={(task) => onSave(task)} />
     </div>
   );
 };

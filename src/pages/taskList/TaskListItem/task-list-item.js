@@ -8,11 +8,11 @@ export const TaskListItem = ({ task, onChangeSelected, active, onDelete }) => {
       className={`TaskListItem ${active ? 'Active' : ''}`}
       onClick={() => onChangeSelected()}
     >
-        <ClearIcon
-          className="remove"
-          aria-label="delete"
-          onClick={() => onDelete()}
-        />
+      <ClearIcon
+        className="remove"
+        aria-label="delete"
+        onClick={() => onDelete()}
+      />
       <Taskinfo taskInfo={task} />
     </div>
   );

@@ -1,8 +1,8 @@
-import "./task-info.scss"
+import './task-info.scss';
 import avatar from '../../assets/Images/img.png';
 
 export const Taskinfo = ({ taskInfo }) => {
-  return(
+  return (
     <div className="TaskInfo">
       <div className="PersonInfo">
         <img width={60} height={60} src={avatar} alt="avatar" />
@@ -12,5 +12,5 @@ export const Taskinfo = ({ taskInfo }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
