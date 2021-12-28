@@ -18,4 +18,15 @@
     display: flex;
     cursor: pointer;
   }
+
+  .IconContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 60px;
+
+    .remove {
+      cursor: pointer;
+      color: white;
+    }
+  }
 }

@@ -1,7 +1,6 @@
 .TaskListItem {
   background: rgba(35, 38, 44, 1);
   width: 420px;
-  height: 228px;
   border-radius: 20px;
   margin: 24px;
   display: flex;
@@ -9,8 +8,17 @@
   justify-content: center;
   flex-direction: column;
   cursor: pointer;
+  position: relative;
+
+  .remove {
+    color: white;
+    position: absolute;
+    margin: 8px;
+    top: 0;
+    right: 0;
+  }
 
   &.Active {
-    border: 2px solid #383B41;
+    border: 1px solid #383B41;
   }
 }

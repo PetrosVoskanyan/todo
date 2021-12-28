@@ -2,13 +2,11 @@
   margin: 40px;
 
   .PersonInfo {
-    border-bottom: 1px solid rgba(244, 246, 250, 0.3);
     display: flex;
     flex-direction: row;
     gap: 20px;
     justify-content: center;
 
-    padding: 0 0 40px 0;
   }
 
   .PersonInfoText {

@@ -1,0 +1,25 @@
+.AddTaskListItem {
+  width: 420px;
+  height: 120px;
+  border-radius: 20px;
+  margin: 24px;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  border: 1px solid #383B41;
+
+  .Add {
+    color: white;
+    width: 60px;
+    height: 60px;
+    padding: 30px 15px;
+  }
+
+  .AddText {
+    color: rgba(140, 142, 147, 1);
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 36px;
+    padding: 20px 0;
+  }
+}

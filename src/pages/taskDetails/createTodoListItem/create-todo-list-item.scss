@@ -1,0 +1,39 @@
+.CreateTodoListItem{
+  padding: 5px;
+  margin: 0 0 0 40px;
+  display: flex;
+  grid-gap: 8px;
+  gap: 8px;
+
+  .CreateContainer {
+    display: flex;
+    gap: 8px;
+
+    .CreateButton {
+      color: white;
+      width: 27px;
+      height: 27px;
+      grid-gap: 5px;
+      gap: 5px;
+      cursor: pointer;
+      align-content: center;
+      justify-content: center;
+    }
+
+    .AddText {
+      color: white;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 19px;
+    }
+  }
+
+  .TaskInput {
+    background: transparent;
+    cursor: text;
+    color: white;
+    border: none;
+    outline: none;
+  }
+}

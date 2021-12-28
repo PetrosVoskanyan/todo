@@ -1,0 +1,38 @@
+.CreateTaskListItemForm {
+  display: flex;
+  flex-direction: column;
+  margin: 40px;
+  gap: 20px;
+
+  .CreateTaskListItem {
+    display: flex;
+    gap: 16px;
+    border-bottom: 1px solid grey;
+    padding: 16px;
+    width: 800px;
+  }
+
+  .InputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .Input {
+      margin: 3px;
+      background: transparent;
+      cursor: text;
+      color: white;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .ButtonContainer {
+    gap: 15px;
+    display: flex;
+    justify-content: flex-end;
+    margin: 50px 15px;
+  }
+}
