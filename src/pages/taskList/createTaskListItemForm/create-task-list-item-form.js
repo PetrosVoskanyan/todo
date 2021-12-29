@@ -4,6 +4,8 @@ import './create-task-list-item-form.scss';
 import { Button } from '@mui/material';
 import { CreateTodoListItem } from '../../taskDetails/createTodoListItem/create-todo-list-item';
 import { TodoList } from '../../taskDetails/todoList/todo-list';
+import { useDispatch } from 'react-redux';
+import { actions } from '../../../store';
 
 const DRAFT_TASK_LIST = {
   title: '',
@@ -12,8 +14,8 @@ const DRAFT_TASK_LIST = {
 };
 
 
-export const CreateTaskListItemForm = ({ onTaskSave, onAddMode }) => {
-
+export const CreateTaskListItemForm = ({ onClose }) => {
+  const dispatch = useDispatch();
   const [draftTask, setDraftTask] = useState(DRAFT_TASK_LIST);
 
   const descriptionAddMod = (ev) => {
@@ -33,7 +35,8 @@ export const CreateTaskListItemForm = ({ onTaskSave, onAddMode }) => {
   };
 
   const SaveItem = () => {
-    onTaskSave(draftTask);
+    dispatch({ type: actions.createTask, payload: draftTask });
+    onClose(draftTask);
   };
 
   const onKeyUp = (ev) => {
@@ -42,7 +45,7 @@ export const CreateTaskListItemForm = ({ onTaskSave, onAddMode }) => {
     }
 
     if (ev.key === 'Escape') {
-      onAddMode();
+      onClose();
     }
   };
 
@@ -84,14 +87,16 @@ export const CreateTaskListItemForm = ({ onTaskSave, onAddMode }) => {
         <Button
           variant="text"
           color="success"
-          onClick={() => onAddMode()}
+          onClick={() => onClose()}
         >
           Cancel
         </Button>
         <Button
           variant="outlined"
           color="success"
-          onClick={(ev) => SaveItem(ev)}>
+          disabled={!draftTask.title || !draftTask.description}
+          onClick={(ev) => SaveItem(ev)}
+        >
           Save
         </Button>
       </div>
