@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import { CreateTodoListItem } from '../../taskDetails/createTodoListItem/create-todo-list-item';
 import { TodoList } from '../../taskDetails/todoList/todo-list';
 import { useDispatch } from 'react-redux';
-import { actions } from '../../../store';
+import { tasksSlice } from '../../../store';
 
 const DRAFT_TASK_LIST = {
   title: '',
@@ -35,8 +35,8 @@ export const CreateTaskListItemForm = ({ onClose }) => {
   };
 
   const SaveItem = () => {
-    dispatch({ type: actions.createTask, payload: draftTask });
-    onClose(draftTask);
+    dispatch(tasksSlice.actions.createTask(draftTask));
+    onClose();
   };
 
   const onKeyUp = (ev) => {

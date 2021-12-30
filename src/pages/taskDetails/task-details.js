@@ -3,35 +3,28 @@ import { TodoList } from './todoList/todo-list';
 import { Taskinfo } from '../../components/task-info';
 import { CreateTodoListItem } from './createTodoListItem/create-todo-list-item';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../store';
-import { selectTaskByIndex } from '../../store/selectors';
+import { tasksSlice } from '../../store';
 
 export const TaskDetails = ({ selectedTaskIndex }) => {
   const dispatch = useDispatch();
-  const task = useSelector((state) => selectTaskByIndex(state, selectedTaskIndex));
+  const task = useSelector((state) => tasksSlice.selectors.selectByIndex(state, selectedTaskIndex));
 
   const handleDeleteTodo = (index) => {
-    dispatch({
-      type: actions.deleteTodo,
-      payload: {
-        taskIndex: selectedTaskIndex,
-        todoIndex: index,
-      },
-    });
+    dispatch(tasksSlice.actions.deleteTodo({
+      taskIndex: selectedTaskIndex,
+      todoIndex: index,
+    }));
   };
 
   const handleCreateTodo = (name) => {
-    dispatch({
-      type: actions.createTodo,
-      payload: {
-        taskIndex: selectedTaskIndex,
-        todo: name,
-      },
-    });
+    dispatch(tasksSlice.actions.createTodo({
+      taskIndex: selectedTaskIndex,
+      todo: name,
+    }));
   };
 
   if (!task) {
-    return;
+    return null;
   }
 
   return (
