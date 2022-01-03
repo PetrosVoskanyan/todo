@@ -6,6 +6,7 @@ import { CreateTodoListItem } from '../../taskDetails/createTodoListItem/create-
 import { TodoList } from '../../taskDetails/todoList/todo-list';
 import { useDispatch } from 'react-redux';
 import { tasksSlice } from '../../../store';
+import { useNavigate } from 'react-router-dom';
 
 const DRAFT_TASK_LIST = {
   title: '',
@@ -14,8 +15,9 @@ const DRAFT_TASK_LIST = {
 };
 
 
-export const CreateTaskListItemForm = ({ onClose }) => {
+export const CreateTaskListItemForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [draftTask, setDraftTask] = useState(DRAFT_TASK_LIST);
 
   const descriptionAddMod = (ev) => {
@@ -30,13 +32,15 @@ export const CreateTaskListItemForm = ({ onClose }) => {
     setDraftTask({ ...draftTask, title: text });
   };
 
+  const handleClose = () => navigate('/');
+
   const handleSaveTask = (task) => {
     setDraftTask({ ...draftTask, todos: [...draftTask.todos, task] });
   };
 
   const SaveItem = () => {
     dispatch(tasksSlice.actions.createTask(draftTask));
-    onClose();
+    handleClose();
   };
 
   const onKeyUp = (ev) => {
@@ -45,7 +49,7 @@ export const CreateTaskListItemForm = ({ onClose }) => {
     }
 
     if (ev.key === 'Escape') {
-      onClose();
+      handleClose();
     }
   };
 
@@ -87,7 +91,7 @@ export const CreateTaskListItemForm = ({ onClose }) => {
         <Button
           variant="text"
           color="success"
-          onClick={() => onClose()}
+          onClick={() => handleClose()}
         >
           Cancel
         </Button>

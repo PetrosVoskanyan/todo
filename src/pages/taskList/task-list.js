@@ -1,29 +1,23 @@
 import { TaskListItem } from './TaskListItem/task-list-item';
 import './task-list.scss';
 import { AddTaskListItem } from './addTaskListItem/add-task-list-item';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { tasksSlice } from '../../store';
 
-export const TaskList = ({ selectedTaskIndex, onChange, onAdd }) => {
-  const dispatch = useDispatch();
+export const TaskList = () => {
   const taskList = useSelector(tasksSlice.selectors.selectAll);
-
-  const handleDeleteTask = (index) => {
-    dispatch(tasksSlice.actions.deleteTask(index));
-  };
 
   return (
     <div className="TaskList">
-      <AddTaskListItem ChangePage={() => onAdd()} />
+      <AddTaskListItem />
       {
         taskList.map((item, ind) => (
-          <TaskListItem
-            key={ind}
-            task={item}
-            onChangeSelected={() => onChange(ind)}
-            active={ind === selectedTaskIndex}
-            onDelete={() => handleDeleteTask(ind)}
-          />
+            <TaskListItem
+              index={ind}
+              key={ind}
+              task={item}
+              active={true}
+            />
         ))
       }
     </div>
