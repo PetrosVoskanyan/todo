@@ -11,7 +11,7 @@ function App() {
       <PageContent>
         <Routes>
           <Route path="/create" element={<CreateTaskListItemForm />} />
-          <Route path="/:taskIndex" element={<TaskDetails />} />
+          <Route path="/:taskUid" element={<TaskDetails />} />
         </Routes>
       </PageContent>
     </div>

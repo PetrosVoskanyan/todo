@@ -7,6 +7,7 @@ import { TodoList } from '../../taskDetails/todoList/todo-list';
 import { useDispatch } from 'react-redux';
 import { tasksSlice } from '../../../store';
 import { useNavigate } from 'react-router-dom';
+import genUid from 'light-uid';
 
 const DRAFT_TASK_LIST = {
   title: '',
@@ -20,13 +21,13 @@ export const CreateTaskListItemForm = () => {
   const navigate = useNavigate();
   const [draftTask, setDraftTask] = useState(DRAFT_TASK_LIST);
 
-  const descriptionAddMod = (ev) => {
+  const descriptionAddMode = (ev) => {
     const text = ev.target.value;
 
     setDraftTask({ ...draftTask, description: text });
   };
 
-  const titleAddMod = (ev) => {
+  const titleAddMode = (ev) => {
     const text = ev.target.value;
 
     setDraftTask({ ...draftTask, title: text });
@@ -35,17 +36,17 @@ export const CreateTaskListItemForm = () => {
   const handleClose = () => navigate('/');
 
   const handleSaveTask = (task) => {
-    setDraftTask({ ...draftTask, todos: [...draftTask.todos, task] });
+    setDraftTask({ ...draftTask, todos: [...draftTask.todos, { uid: genUid(), ...task }] });
   };
 
-  const SaveItem = () => {
+  const saveItem = () => {
     dispatch(tasksSlice.actions.createTask(draftTask));
     handleClose();
   };
 
   const onKeyUp = (ev) => {
     if (ev.key === 'Enter') {
-      SaveItem();
+      saveItem();
     }
 
     if (ev.key === 'Escape') {
@@ -53,11 +54,11 @@ export const CreateTaskListItemForm = () => {
     }
   };
 
-  const onDeleteTodo = (ind) => {
-    const draftTaskList = draftTask.todos;
-    draftTaskList.splice(ind, 1);
+  const onDeleteTodo = (uid) => {
+    const draftTaskList = draftTask.todos.filter((t) => t.uid !== uid);
     setDraftTask({ ...draftTask, todos: draftTaskList });
   };
+
   return (
     <div
       className="CreateTaskListItemForm"
@@ -72,20 +73,20 @@ export const CreateTaskListItemForm = () => {
             placeholder="give a name to your doit"
             type="text"
             className="Input"
-            onChange={(ev) => titleAddMod(ev)}
+            onChange={(ev) => titleAddMode(ev)}
             maxLength={25}
           />
           <input
             placeholder="tell a bit about your doit"
             type="text"
             className="Input"
-            onChange={(ev) => descriptionAddMod(ev)}
+            onChange={(ev) => descriptionAddMode(ev)}
           />
         </div>
       </div>
       <div>
-        <TodoList tasksText={draftTask} onDelete={(ind) => onDeleteTodo(ind)} />
-        <CreateTodoListItem handleClick={(task) => handleSaveTask(task)} />
+        <TodoList task={draftTask} onDelete={(uid) => onDeleteTodo(uid)} />
+        <CreateTodoListItem onClick={(task) => handleSaveTask(task)} />
       </div>
       <div className="ButtonContainer">
         <Button
@@ -99,7 +100,7 @@ export const CreateTaskListItemForm = () => {
           variant="outlined"
           color="success"
           disabled={!draftTask.title || !draftTask.description}
-          onClick={(ev) => SaveItem(ev)}
+          onClick={(ev) => saveItem(ev)}
         >
           Save
         </Button>

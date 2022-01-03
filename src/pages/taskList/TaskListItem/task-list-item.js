@@ -6,19 +6,19 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 
-export const TaskListItem = ({ task, index }) => {
+export const TaskListItem = ({ task }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleDeleteTask = (ev) => {
     ev.preventDefault();
-    dispatch(tasksSlice.actions.deleteTask(index));
+    dispatch(tasksSlice.actions.deleteTask(task.uid));
     navigate('/');
   };
 
   return (
     <NavLink
-      to={`/${index}`}
+      to={`/${task.uid}`}
       className={({ isActive }) => clsx('TaskListItem', { Active: isActive })}
     >
       <ClearIcon

@@ -11,13 +11,12 @@ export const TaskList = () => {
     <div className="TaskList">
       <AddTaskListItem />
       {
-        taskList.map((item, ind) => (
-            <TaskListItem
-              index={ind}
-              key={ind}
-              task={item}
-              active={true}
-            />
+        taskList.map((item) => (
+          <TaskListItem
+            key={item.uid}
+            task={item}
+            active={true}
+          />
         ))
       }
     </div>

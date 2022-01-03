@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { genUid } from 'light-uid';
 
 const getInitialState = () => {
   return {
@@ -11,26 +12,31 @@ const slice = createSlice({
   name: 'tasks',
   initialState: getInitialState(),
   reducers: {
-    deleteTask: (state, { payload: index }) => {
-      state.allTasks.splice(index, 1);
+    deleteTask: (state, { payload: uid }) => {
+      state.allTasks = state.allTasks.filter(task => task.uid !== uid);
     },
     createTask: (state, { payload }) => {
-      state.allTasks.push(payload);
+      payload.todos = payload.todos.map((todo) => ({ uid: genUid(), ...todo }));
+      state.allTasks.push({ uid: genUid(), ...payload });
     },
     deleteTodo: (state, { payload }) => {
-      const { taskIndex, todoIndex } = payload;
-      state.allTasks[taskIndex].todos.splice(todoIndex, 1);
+      const { taskUid, todoUid } = payload;
+      const task = state.allTasks.find((t) => t.uid === taskUid);
+      task.todos = task.todos.filter((todo) => todo.uid !== todoUid);
     },
     createTodo: (state, { payload }) => {
-      const { taskIndex, todo } = payload;
-      state.allTasks[taskIndex].todos.push(todo);
+      const { taskUid, todo } = payload;
+
+      const newTodo = { uid: genUid(), ...todo };
+      const task = state.allTasks.find((t) => t.uid === taskUid);
+      task.todos.push(newTodo);
     },
   },
 });
 
 const selectors = {
   selectAll: (state) => state.tasks.allTasks,
-  selectByIndex: (state, index) => state.tasks.allTasks[index],
+  selectByUid: (state, Uid) => state.tasks.allTasks.find((task) => task.uid === Uid),
 };
 
 export const tasksSlice = {

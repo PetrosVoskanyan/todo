@@ -1,14 +1,14 @@
 import { TodoListItem } from '../todoListItem/todo-list-item';
 import './to-do-list.scss';
 
-export const TodoList = ({ tasksText, onDelete }) => {
+export const TodoList = ({ task, onDelete }) => {
   return (
     <div className="TodoList">
       {
-        tasksText.todos.map((item, ind) => (
+        task.todos.map((item) => (
           <TodoListItem
-            onDelete={() => onDelete(ind)}
-            key={ind}
+            onDelete={() => onDelete(item.uid)}
+            key={item.uid}
             taskInfo={item.name}
           />
         ))

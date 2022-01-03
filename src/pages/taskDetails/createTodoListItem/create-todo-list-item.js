@@ -3,8 +3,7 @@ import './create-todo-list-item.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
-export const CreateTodoListItem = ({ handleClick }) => {
-
+export const CreateTodoListItem = ({ onClick }) => {
   const [isDone, setIsDone] = useState(false);
   const [name, setName] = useState('');
 
@@ -13,7 +12,7 @@ export const CreateTodoListItem = ({ handleClick }) => {
   };
 
   const toggleEditMode = () => {
-    handleClick({ isDone, name });
+    onClick({ isDone, name });
     toggleChangeMode();
   };
 
