@@ -1,18 +1,21 @@
 import { TodoListItem } from '../todoListItem/todo-list-item';
-import './to-do-list.scss';
+import PatchStyles from 'patch-styles';
+import * as classes from './todo-list.models.scss';
 
 export const TodoList = ({ task, onDelete }) => {
   return (
-    <div className="TodoList">
-      {
-        task.todos.map((item) => (
-          <TodoListItem
-            onDelete={() => onDelete(item.uid)}
-            key={item.uid}
-            taskInfo={item.name}
-          />
-        ))
-      }
-    </div>
+    <PatchStyles classNames={classes}>
+      <div className="TodoList">
+        {
+          task.todos.map((item) => (
+            <TodoListItem
+              onDelete={() => onDelete(item.uid)}
+              key={item.uid}
+              taskInfo={item.name}
+            />
+          ))
+        }
+      </div>
+    </PatchStyles>
   );
 };

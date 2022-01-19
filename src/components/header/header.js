@@ -1,15 +1,18 @@
 import { Component } from 'react';
 import { ReactComponent as LogoSvg } from '../../assets/Images/logo.svg';
-import './header.scss';
+import PatchStyles from 'patch-styles';
+import * as classes from './header.models.scss';
 
 export class Header extends Component {
   render() {
     return (
-      <div className="Header">
-        <div className="Logo">
-          <LogoSvg />
+      <PatchStyles classNames={classes}>
+        <div className="Header">
+          <div className="Logo">
+            <LogoSvg />
+          </div>
         </div>
-      </div>
+      </PatchStyles>
     );
   }
 }

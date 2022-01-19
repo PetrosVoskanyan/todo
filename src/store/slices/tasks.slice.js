@@ -36,7 +36,7 @@ const slice = createSlice({
 
 const selectors = {
   selectAll: (state) => state.tasks.allTasks,
-  selectByUid: (state, Uid) => state.tasks.allTasks.find((task) => task.uid === Uid),
+  selectByUid: (state, uid) => state.tasks.allTasks.find((task) => task.uid === uid),
 };
 
 export const tasksSlice = {

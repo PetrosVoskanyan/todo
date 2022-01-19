@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import avatar from '../../../assets/Images/img.png';
-import './create-task-list-item-form.scss';
+import './create-task-list-item-form.models.scss';
 import { Button } from '@mui/material';
 import { CreateTodoListItem } from '../../taskDetails/createTodoListItem/create-todo-list-item';
 import { TodoList } from '../../taskDetails/todoList/todo-list';
@@ -8,6 +8,9 @@ import { useDispatch } from 'react-redux';
 import { tasksSlice } from '../../../store';
 import { useNavigate } from 'react-router-dom';
 import genUid from 'light-uid';
+import PatchStyles from 'patch-styles';
+import * as classes from './create-task-list-item-form.models.scss';
+
 
 const DRAFT_TASK_LIST = {
   title: '',
@@ -60,51 +63,53 @@ export const CreateTaskListItemForm = () => {
   };
 
   return (
-    <div
-      className="CreateTaskListItemForm"
-      onKeyDown={(ev) => onKeyUp(ev)}
-    >
-      <div className="CreateTaskListItem">
-        <div className="Avatar">
-          <img width={60} height={60} src={avatar} alt="avatar" />
+    <PatchStyles classNames={classes}>
+      <div
+        className="CreateTaskListItemForm"
+        onKeyDown={(ev) => onKeyUp(ev)}
+      >
+        <div className="CreateTaskListItem">
+          <div className="Avatar">
+            <img width={60} height={60} src={avatar} alt="avatar" />
+          </div>
+          <div className="InputContainer">
+            <input
+              placeholder="give a name to your doit"
+              type="text"
+              className="Input"
+              onChange={(ev) => titleAddMode(ev)}
+              maxLength={25}
+            />
+            <input
+              placeholder="tell a bit about your doit"
+              type="text"
+              className="Input"
+              onChange={(ev) => descriptionAddMode(ev)}
+            />
+          </div>
         </div>
-        <div className="InputContainer">
-          <input
-            placeholder="give a name to your doit"
-            type="text"
-            className="Input"
-            onChange={(ev) => titleAddMode(ev)}
-            maxLength={25}
-          />
-          <input
-            placeholder="tell a bit about your doit"
-            type="text"
-            className="Input"
-            onChange={(ev) => descriptionAddMode(ev)}
-          />
+        <div>
+          <TodoList task={draftTask} onDelete={(uid) => onDeleteTodo(uid)} />
+          <CreateTodoListItem onClick={(task) => handleSaveTask(task)} />
+        </div>
+        <div className="ButtonContainer">
+          <Button
+            variant="text"
+            color="success"
+            onClick={() => handleClose()}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="outlined"
+            color="success"
+            disabled={!draftTask.title || !draftTask.description}
+            onClick={(ev) => saveItem(ev)}
+          >
+            Save
+          </Button>
         </div>
       </div>
-      <div>
-        <TodoList task={draftTask} onDelete={(uid) => onDeleteTodo(uid)} />
-        <CreateTodoListItem onClick={(task) => handleSaveTask(task)} />
-      </div>
-      <div className="ButtonContainer">
-        <Button
-          variant="text"
-          color="success"
-          onClick={() => handleClose()}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="outlined"
-          color="success"
-          disabled={!draftTask.title || !draftTask.description}
-          onClick={(ev) => saveItem(ev)}
-        >
-          Save
-        </Button>
-      </div>
-    </div>
+    </PatchStyles>
   );
 };
