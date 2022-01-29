@@ -1,8 +1,43 @@
 import PatchStyles from 'patch-styles';
-import * as classes from './task-info.models.scss';
 import avatar from '../../assets/Images/img.png';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles((theme) => ({
+  TaskInfo: {
+    margin: theme.spacing(5),
+  },
+  PersonInfo: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: theme.spacing(2),
+    justifyContent: 'center',
+  },
+  PersonInfoText: {
+    display: 'flex',
+    flexDirection: 'column',
+},
+TodoText: {
+  fontStyle: 'normal',
+  fontWeight: 'bold',
+  fontSize: theme.spacing(3),
+  lineHeight: theme.spacing(4),
+  textDecoration: 'none',
+  color: theme.palette.text.secondary,
+},
+TodoTextInfo: {
+  fontStyle: 'normal',
+  fontWeight: 'normal',
+  fontSize: theme.spacing(1.5),
+  lineHeight: theme.spacing(2),
+  textDecoration: 'none',
+  color: theme.palette.text.secondary,
+  opacity: 0.5,
+},
+}));
 
 export const TaskInfo = ({ taskInfo }) => {
+  const classes = useStyles();
+
   return (
     <PatchStyles classNames={classes}>
       <div className="TaskInfo">

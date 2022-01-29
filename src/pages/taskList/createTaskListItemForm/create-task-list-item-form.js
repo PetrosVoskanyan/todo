@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import avatar from '../../../assets/Images/img.png';
-import './create-task-list-item-form.models.scss';
 import { Button } from '@mui/material';
 import { CreateTodoListItem } from '../../taskDetails/createTodoListItem/create-todo-list-item';
 import { TodoList } from '../../taskDetails/todoList/todo-list';
@@ -9,8 +8,44 @@ import { tasksSlice } from '../../../store';
 import { useNavigate } from 'react-router-dom';
 import genUid from 'light-uid';
 import PatchStyles from 'patch-styles';
-import * as classes from './create-task-list-item-form.models.scss';
+import { makeStyles } from '@mui/styles';
 
+const useStyles = makeStyles((theme) => ({
+  CreateTaskListItemForm: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: theme.spacing(5),
+    gap: theme.spacing(3),
+  },
+  CreateTaskListItem: {
+    display: 'flex',
+    gap: theme.spacing(2),
+    borderBottom: '1px solid grey',
+    padding: theme.spacing(2),
+    width: theme.spacing(100),
+  },
+  InputContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: theme.spacing(1),
+  },
+  Input: {
+    margin: 3,
+    background: 'transparent',
+    cursor: 'text',
+    color: 'white',
+    border: 'none',
+    outline: 'none',
+    fontSize: theme.spacing(2),
+    fontWeight: 'bold',
+  },
+  ButtonContainer: {
+    gap: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'flex-end',
+    margin: [theme.spacing(6), theme.spacing(2)],
+  },
+}));
 
 const DRAFT_TASK_LIST = {
   title: '',
@@ -20,6 +55,7 @@ const DRAFT_TASK_LIST = {
 
 
 export const CreateTaskListItemForm = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [draftTask, setDraftTask] = useState(DRAFT_TASK_LIST);

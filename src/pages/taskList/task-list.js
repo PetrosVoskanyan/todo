@@ -3,9 +3,17 @@ import { AddTaskListItem } from './addTaskListItem/add-task-list-item';
 import { useSelector } from 'react-redux';
 import { tasksSlice } from '../../store';
 import PatchStyles from 'patch-styles';
-import * as classes from './task-list.models.scss';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles(() => ({
+  PageContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+}));
 
 export const TaskList = () => {
+  const classes = useStyles();
   const taskList = useSelector(tasksSlice.selectors.selectAll);
 
   return (

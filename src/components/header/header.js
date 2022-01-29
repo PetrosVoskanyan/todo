@@ -1,18 +1,29 @@
-import { Component } from 'react';
 import { ReactComponent as LogoSvg } from '../../assets/Images/logo.svg';
 import PatchStyles from 'patch-styles';
-import * as classes from './header.models.scss';
+import { makeStyles } from '@mui/styles';
 
-export class Header extends Component {
-  render() {
-    return (
-      <PatchStyles classNames={classes}>
-        <div className="Header">
-          <div className="Logo">
-            <LogoSvg />
-          </div>
+const useStyles = makeStyles((theme) => ({
+  Header: {
+    background: theme.palette.primary.light,
+    display: 'flex',
+    alignItems: 'flex-start',
+    height: theme.spacing(8),
+  },
+  Logo: {
+    padding: [theme.spacing(2), theme.spacing(0), theme.spacing(2), theme.spacing(3)],
+  },
+}));
+
+export const Header = () => {
+  const classes = useStyles();
+
+  return (
+    <PatchStyles classNames={classes}>
+      <div className="Header">
+        <div className="Logo">
+          <LogoSvg />
         </div>
-      </PatchStyles>
-    );
-  }
-}
+      </div>
+    </PatchStyles>
+  );
+};

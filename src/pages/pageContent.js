@@ -1,9 +1,17 @@
 import { Header } from '../components/header/index';
 import { TaskList } from './taskList/task-list';
 import PatchStyles from 'patch-styles';
-import * as classes from './pageContent.models.scss';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles(() => ({
+  PageContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+}));
 
 export const PageContent = ({ children }) => {
+  const classes = useStyles();
 
   return (
     <PatchStyles classNames={classes}>

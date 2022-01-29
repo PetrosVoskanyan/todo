@@ -4,17 +4,19 @@ import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import { store } from './store';
 import React from 'react';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { GeneralMuiConfig } from './components/main-providers/general-mui-config';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <GeneralMuiConfig>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </GeneralMuiConfig>
   </React.StrictMode>,
   document.getElementById('root'),
 );
