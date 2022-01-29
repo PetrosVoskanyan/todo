@@ -12,7 +12,7 @@ ReactDOM.render(
   <React.StrictMode>
     <GeneralMuiConfig>
       <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter basename="/todo">
           <App />
         </BrowserRouter>
       </Provider>
