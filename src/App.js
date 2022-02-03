@@ -1,13 +1,13 @@
 import { PageContent } from './pages/pageContent';
 import { Route, Routes } from 'react-router-dom';
-import { CreateTaskListItemForm } from './pages/taskList/createTaskListItemForm/create-task-list-item-form';
+import { CreateTaskForm } from './pages/taskList/createTaskListItemForm/create-task-form';
 import { TaskDetails } from './pages/taskDetails/task-details';
 import { makeStyles } from '@mui/styles';
 import PatchStyles from 'patch-styles';
 
 const useStyles = makeStyles((theme) => ({
   AppRoot: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.light,
     height: '100%',
   },
 }));
@@ -21,7 +21,7 @@ function App() {
       <div className="AppRoot">
         <PageContent>
           <Routes>
-            <Route path="/create" element={<CreateTaskListItemForm />} />
+            <Route path="/create" element={<CreateTaskForm />} />
             <Route path="/:taskUid" element={<TaskDetails />} />
           </Routes>
         </PageContent>

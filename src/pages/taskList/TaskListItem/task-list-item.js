@@ -1,14 +1,14 @@
 import { TaskInfo } from '../../../components/task-info';
 import ClearIcon from '@mui/icons-material/Clear';
-import { tasksSlice } from '../../../store';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles } from '@mui/styles';
+import { useDeleteTaskMutation } from '../../../store/sevices/tasks.service';
+import { WithLoader } from '../../../components/with-loader';
 
 const useStyles = makeStyles((theme) => ({
   TaskListItem: {
-    background: theme.palette.primary.main,
+    background: theme.palette.primary.light,
     width: theme.spacing(53),
     borderRadius: theme.spacing(3),
     margin: theme.spacing(3),
@@ -36,12 +36,12 @@ const useStyles = makeStyles((theme) => ({
 
 export const TaskListItem = ({ task }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const [deleteTask, { isLoading }] = useDeleteTaskMutation();
   const navigate = useNavigate();
 
   const handleDeleteTask = (ev) => {
     ev.preventDefault();
-    dispatch(tasksSlice.actions.deleteTask(task.uid));
+    deleteTask(task.uid);
     navigate('/');
   };
 
@@ -50,11 +50,13 @@ export const TaskListItem = ({ task }) => {
       to={`/${task.uid}`}
       className={({ isActive }) => clsx(classes.TaskListItem, { [classes.active]: isActive })}
     >
-      <ClearIcon
-        className={classes.remove}
-        aria-label="delete"
-        onClick={handleDeleteTask}
-      />
+      <WithLoader className={classes.remove} isLoading={isLoading}>
+        <ClearIcon
+          className={classes.remove}
+          aria-label="delete"
+          onClick={handleDeleteTask}
+        />
+      </WithLoader>
       <TaskInfo taskInfo={task} />
     </NavLink>
   );

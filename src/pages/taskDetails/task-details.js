@@ -1,24 +1,44 @@
-import './task-details.models.scss';
 import { TodoList } from './todoList/todo-list';
 import { TaskInfo } from '../../components/task-info';
 import { CreateTodoListItem } from './createTodoListItem/create-todo-list-item';
-import { useDispatch, useSelector } from 'react-redux';
-import { tasksSlice } from '../../store';
 import { useParams } from 'react-router-dom';
-import PatchStyles from 'patch-styles';
-import * as classes from './task-details.models.scss';
+import {
+  useChangeIsDoneMutation, useCreateTodoMutation, useDeleteTodoMutation, useFetchTaskListQuery,
+} from '../../store/sevices/tasks.service';
+import genUid from 'light-uid';
 
 export const TaskDetails = () => {
-  const dispatch = useDispatch();
+  const [createTodo] = useCreateTodoMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
   const { taskUid } = useParams();
-  const task = useSelector((state) => tasksSlice.selectors.selectByUid(state, taskUid));
+  const [changeIsDone] = useChangeIsDoneMutation();
+
+  const { data: task } = useFetchTaskListQuery(null, {
+    selectFromResult: ({ data, ...otherInfo }) => ({
+      data: data && ({
+        ...data[taskUid],
+        todos: Array.from(Object.values(data[taskUid].todos ?? {})),
+      }),
+      ...otherInfo,
+    }),
+  });
 
   const handleDeleteTodo = (todoUid) => {
-    dispatch(tasksSlice.actions.deleteTodo({ taskUid, todoUid }));
+    deleteTodo({ taskUid, todoUid });
+  };
+
+  const handleIsDoneChangeForTodo = ({ todoUid, isDone }) => {
+    changeIsDone({ taskUid, todoUid, isDone });
   };
 
   const handleCreateTodo = (todo) => {
-    dispatch(tasksSlice.actions.createTodo({ taskUid, todo }));
+    createTodo({
+      taskUid, todo: {
+        uid: genUid(),
+        name: todo.name,
+        isDone: false,
+      },
+    });
   };
 
   if (!task) {
@@ -26,12 +46,14 @@ export const TaskDetails = () => {
   }
 
   return (
-    <PatchStyles classNames={classes}>
-      <div className="TaskDetails">
-        <TaskInfo taskInfo={task} />
-        <TodoList task={task} onDelete={(todoUid) => handleDeleteTodo(todoUid)} />
-        <CreateTodoListItem onClick={(todo) => handleCreateTodo(todo)} />
-      </div>
-    </PatchStyles>
+    <div className="TaskDetails">
+      <TaskInfo taskInfo={task} />
+      <TodoList
+        task={task}
+        onDelete={(todoUid) => handleDeleteTodo(todoUid)}
+        onIsDoneChangeForTodo={handleIsDoneChangeForTodo}
+      />
+      <CreateTodoListItem onClick={(todo) => handleCreateTodo(todo)} />
+    </div>
   );
 };

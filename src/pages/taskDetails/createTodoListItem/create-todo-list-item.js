@@ -2,18 +2,61 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import PatchStyles from 'patch-styles';
-import * as classes from './create-todo-list-item.models.scss';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles((theme) => ({
+  CreateTodoListItem: {
+    padding: theme.spacing(0.8),
+    margin: [0, 0, 0, theme.spacing(5)],
+    display: 'flex',
+    gridGap: theme.spacing(1),
+    gap: theme.spacing(1),
+  },
+
+  CreateContainer: {
+    display: 'flex',
+    gap: theme.spacing(1),
+  },
+
+  CreateButton: {
+    color: 'white',
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    gridGap: theme.spacing(0.8),
+    gap: theme.spacing(0.8),
+    cursor: 'pointer',
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+
+  AddText: {
+    color: 'white',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: theme.spacing(2),
+    lineHeight: theme.spacing(2.4),
+  },
+
+  TaskInput: {
+    background: 'transparent',
+    cursor: 'text',
+    color: 'white',
+    border: 'none',
+    outline: 'none',
+  },
+}));
 
 export const CreateTodoListItem = ({ onClick }) => {
-  const [isDone, setIsDone] = useState(false);
+  const classes = useStyles();
+  const [toggle, setToggle] = useState(false);
   const [name, setName] = useState('');
 
   const toggleChangeMode = () => {
-    setIsDone(!isDone);
+    setToggle(!toggle);
   };
 
   const toggleEditMode = () => {
-    onClick({ isDone, name });
+    onClick({ name });
     toggleChangeMode();
   };
 
@@ -26,7 +69,7 @@ export const CreateTodoListItem = ({ onClick }) => {
     <PatchStyles classNames={classes}>
       <div className="CreateTodoListItem">
         {
-          isDone ? (
+          toggle ? (
             <input
               className="TaskInput"
               type="text"

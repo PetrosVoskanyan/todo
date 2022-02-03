@@ -3,12 +3,11 @@ import avatar from '../../../assets/Images/img.png';
 import { Button } from '@mui/material';
 import { CreateTodoListItem } from '../../taskDetails/createTodoListItem/create-todo-list-item';
 import { TodoList } from '../../taskDetails/todoList/todo-list';
-import { useDispatch } from 'react-redux';
-import { tasksSlice } from '../../../store';
 import { useNavigate } from 'react-router-dom';
 import genUid from 'light-uid';
 import PatchStyles from 'patch-styles';
 import { makeStyles } from '@mui/styles';
+import { useCreateTaskMutation } from '../../../store/sevices/tasks.service';
 
 const useStyles = makeStyles((theme) => ({
   CreateTaskListItemForm: {
@@ -54,21 +53,19 @@ const DRAFT_TASK_LIST = {
 };
 
 
-export const CreateTaskListItemForm = () => {
+export const CreateTaskForm = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const [createTask] = useCreateTaskMutation();
   const navigate = useNavigate();
   const [draftTask, setDraftTask] = useState(DRAFT_TASK_LIST);
 
   const descriptionAddMode = (ev) => {
     const text = ev.target.value;
-
     setDraftTask({ ...draftTask, description: text });
   };
 
   const titleAddMode = (ev) => {
     const text = ev.target.value;
-
     setDraftTask({ ...draftTask, title: text });
   };
 
@@ -79,7 +76,7 @@ export const CreateTaskListItemForm = () => {
   };
 
   const saveItem = () => {
-    dispatch(tasksSlice.actions.createTask(draftTask));
+    createTask({ ...draftTask, uid: genUid() });
     handleClose();
   };
 
@@ -93,9 +90,18 @@ export const CreateTaskListItemForm = () => {
     }
   };
 
-  const onDeleteTodo = (uid) => {
+  const handleDeleteTodo = (uid) => {
     const draftTaskList = draftTask.todos.filter((t) => t.uid !== uid);
     setDraftTask({ ...draftTask, todos: draftTaskList });
+  };
+
+  const handleIsDoneChangeForTodo = ({ todoUid, isDone }) => {
+    setDraftTask({
+      ...draftTask,
+      todos: draftTask.todos.map((todo) => (
+        todo.uid === todoUid ? ({ ...todo, isDone }) : todo
+      )),
+    });
   };
 
   return (
@@ -125,7 +131,11 @@ export const CreateTaskListItemForm = () => {
           </div>
         </div>
         <div>
-          <TodoList task={draftTask} onDelete={(uid) => onDeleteTodo(uid)} />
+          <TodoList
+            task={draftTask}
+            onDelete={(uid) => handleDeleteTodo(uid)}
+            onIsDoneChangeForTodo={handleIsDoneChangeForTodo}
+          />
           <CreateTodoListItem onClick={(task) => handleSaveTask(task)} />
         </div>
         <div className="ButtonContainer">

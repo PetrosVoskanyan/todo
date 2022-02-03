@@ -1,17 +1,26 @@
 import { TodoListItem } from '../todoListItem/todo-list-item';
 import PatchStyles from 'patch-styles';
-import * as classes from './todo-list.models.scss';
+import { makeStyles } from '@mui/styles';
 
-export const TodoList = ({ task, onDelete }) => {
+const useStyles = makeStyles((theme) => ({
+  TodoList: {
+    margin: [theme.spacing(5), 0, 0, theme.spacing(5)],
+  },
+}));
+
+export const TodoList = ({ task, onDelete, onIsDoneChangeForTodo }) => {
+  const classes = useStyles();
+
   return (
     <PatchStyles classNames={classes}>
       <div className="TodoList">
         {
-          task.todos.map((item) => (
+          task.todos?.map((item) => (
             <TodoListItem
-              onDelete={() => onDelete(item.uid)}
               key={item.uid}
-              taskInfo={item.name}
+              todo={item}
+              onDelete={() => onDelete(item.uid)}
+              onIsDoneChange={onIsDoneChangeForTodo}
             />
           ))
         }
